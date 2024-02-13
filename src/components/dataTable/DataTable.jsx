@@ -1,85 +1,73 @@
-import React,{useMemo} from "react";
-// import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import React from "react";
 import "./DataTable.scss";
-import { Link } from "react-router-dom";
-import { BiEditAlt } from "react-icons/bi";
-import { RiDeleteBin5Line } from "react-icons/ri";
-
-import { useTable,usePagination } from "react-table";
-import { TableColumns } from "../../utils/tableData";
-import { userRows } from "../../utils/usersData";
-
+import { GoSortAsc, GoSortDesc } from "react-icons/go";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import {
+  useTable,
+  useSortBy,
+  usePagination,
+  useGlobalFilter,
+} from "react-table";
 
 export default function DataTable(props) {
-  // const handleDelete=(id)=>{
-  //     console.log(id,'deleted...')
-  // }
-  // const actionColumn= {
-  //     field: "action",
-  //     headerName: "Action",
-  //     width: 200,
-  //     renderCell: (params) => {
-  //       return (
-  //         <div className="action">
-  //           <Link to={`/${props.slug}/${params.row.id}`}>
-  //             <BiEditAlt/>
-  //           </Link>
-  //           <div className="delete" onClick={() => handleDelete(params.row.id)}>
-  //             <RiDeleteBin5Line/>
-  //           </div>
-  //         </div>
-  //       );
-  //     },
-  //   };
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
-  } = useTable({
-    columns:TableColumns(),
-    data:userRows
-  },
-  usePagination);
+    page,
+    nextPage,
+    previousPage,
+    canPreviousPage,
+    canNextPage,
+    pageCount,
+    setGlobalFilter,
+    state: { pageIndex, globalFilter },
+  } = useTable(
+    {
+      columns: props.column,
+      data: props.data,
+      initialState: {
+        pageIndex: 0,
+        pageSize: 10,
+      },
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
+
   return (
     <div className="dataTable">
-      {/* <DataGrid
-      className="datagrid"
-      rows={props.rows} columns={[...props.columns,actionColumn]} 
-      initialState={{
-        pagination:{
-            paginationModel:{
-                pageSize:10,
-            }
-        }
-      }}
-      pageSizeOptions={[5]}
-      slots={{toolbar:GridToolbar}}
-      slotProps={{
-        toolbar:{
-            showQuickFilter:true,
-            quickFilterProps:{debounceMs:500}
-        }
-      }}
-      checkboxSelection
-        disableRowSelectionOnClick
-        disableColumnFilter
-        disableDensitySelector
-        disableColumnSelector
-      /> */}
+      <div>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={globalFilter || ""}
+          onChange={(e) => {
+            setGlobalFilter(e.target.value);
+          }}
+        />
+      </div>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render("Header")}
+                  {column.isSorted && (
+                    <span>
+                      {column.isSortedDesc ? <GoSortDesc /> : <GoSortAsc />}
+                    </span>
+                  )}
+                </th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -93,6 +81,29 @@ export default function DataTable(props) {
           })}
         </tbody>
       </table>
+      <div className="pagination">
+        <button
+          disabled={!canPreviousPage}
+          style={{ cursor: !canPreviousPage && "not-allowed" }}
+          onClick={() => {
+            previousPage();
+          }}
+        >
+          <FaAngleLeft />
+        </button>
+        <span>
+          {pageIndex + 1} of {pageCount}
+        </span>
+        <button
+          disabled={!canNextPage}
+          style={{ cursor: !canNextPage && "not-allowed" }}
+          onClick={() => {
+            nextPage();
+          }}
+        >
+          <FaAngleRight />
+        </button>
+      </div>
     </div>
   );
 }

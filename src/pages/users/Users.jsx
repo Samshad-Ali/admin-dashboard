@@ -1,69 +1,43 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import './Users.scss'
 import DataTable from '../../components/dataTable/DataTable'
-import { userRows } from '../../utils/usersData';
+import { UsersColum } from '../../utils/usersColumn'
+import { adminContext } from '../../context/ContextWrapper'
+import { userRows } from '../../utils/usersData'
 const Users = () => {
-  // const columns= [
-  //   { field: "id", headerName: "ID", width: 20 },
-  //   {
-  //     field: "img",
-  //     headerName: "Avatar",
-  //     width: 100,
-  //     renderCell: (params) => {
-  //       return <img className='avatar' src={params.row.img} />;
-  //     },
-  //   },
-  //   {
-  //     field: "firstName",
-  //     type: "string",
-  //     headerName: "First name",
-  //     width: 50,
-  //   },
-  //   {
-  //     field: "lastName",
-  //     type: "string",
-  //     headerName: "Last name",
-  //     width: 50,
-  //   },
-  //   {
-  //     field: "email",
-  //     type: "string",
-  //     headerName: "Email",
-  //     width: 200,
-  //   },
-  //   {
-  //     field: "phone",
-  //     type: "string",
-  //     headerName: "Phone",
-  //     width: 150,
-  //   },
-  //   {
-  //     field: "createdAt",
-  //     headerName: "Created At",
-  //     width: 150,
-  //     type: "string",
-  //   },
-  //   {
-  //     field: "verified",
-  //     headerName: "Verified",
-  //     width: 50,
-  //     type: "boolean",
-  //   },
-  // ];
+  const {users,setUsers} = useContext(adminContext);
+  const addUser=()=>{
+    let user = {
+        id: 41,
+        img: "https://images.pexels.com/photos/8405873/pexels-photo-8405873.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+        lastName: "Hubbard",
+        firstName: "Eula",
+        email: "kewez@@gmail.com",
+        phone: "123 456 789",
+        createdAt: "01.02.2023",
+        verified: true,
+    }
+    setUsers([...users],{user})
+    console.log(users)
+  }
+  // useEffect(()=>{
+  //   setUsers(userRows)
+  // },[])
   return (
     <div className='users'>
       <div className="info">
         <h1>Users</h1>
-      <button>Add New User</button>
+      <button onClick={addUser}>Add New User</button>
       </div>
-      {/* <DataTable
-      slug="users"
-      columns={columns}
-      rows={userRows}
-      /> */}
-      <DataTable/>
+      <DataTable data={users} 
+       column={UsersColum()}
+       />
     </div>
   )
 }
 
-export default Users
+export default Users;
+
+const AddUserComponent=()=>{
+
+}

@@ -33,15 +33,15 @@ const PieChartBox = () => {
       <div className="options">
         {
             pieChartData.map((item)=>(
-                <>
-                    <div key={item.id} className={`dot`}
+                <React.Fragment key={item.id}>
+                    <div className={`dot`}
                     style={{background:item.color}}
                     />
                     <div className="texts">
                         <span>{item.name}</span>
                         <span>{item.value}</span>
                     </div>
-                </>
+                </React.Fragment>
             ))
         }
       </div>

@@ -7,6 +7,9 @@ import Home from "./pages/home/Home";
 import Users from "./pages/users/Users";
 import Products from "./pages/products/Products";
 import Login from "./pages/login/Login";
+import Product from "./pages/product/Product";
+import User from "./pages/user/User";
+import ContextWrapper from "./context/ContextWrapper";
 const App = () => {
   const Layout = () => {
     return (
@@ -38,18 +41,26 @@ const App = () => {
           element: <Users />,
         },
         {
+          path: "/user/:id",
+          element: <User />,
+        },
+        {
           path: "/products",
           element: <Products />,
         },
+        {
+          path: "/product/:id",
+          element: <Product />,
+        },
       ],
     },
-    {
-      path:'/login',
-      element:<Login/>
-    }
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <ContextWrapper>
+      <RouterProvider router={router} />;
+    </ContextWrapper>
+  );
 };
 
 export default App;

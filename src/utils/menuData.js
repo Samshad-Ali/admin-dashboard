@@ -49,13 +49,13 @@ export const menu = [
       {
         id: 3,
         title: "Orders",
-        url: "/orders",
+        url: "/",
         icon: <IoReceiptOutline/>,
       },
       {
         id: 4,
         title: "Posts",
-        url: "/posts",
+        url: "/",
         icon:<BsPostcard/>,
       },
     ],

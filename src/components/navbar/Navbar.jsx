@@ -14,10 +14,10 @@ const Navbar = () => {
         <span>Sam Admin</span>
       </div>
       <div className="icons">
-        <IoSearch />
-        <PiSquaresFourBold />
-         <FaExpand />
-          <IoSearch />
+        <IoSearch  className="icon" />
+        <PiSquaresFourBold  className="icon" />
+         <FaExpand   className="icon"/>
+          <IoSearch   className="icon"/>
         <div className="notification">
           <IoNotifications />
           <span>1</span>
