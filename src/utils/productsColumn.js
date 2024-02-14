@@ -2,9 +2,9 @@ import React, { useMemo } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import CellProductComponents from "./CellProductComponent";
 export const ProductsColumn = () => {
-  const columns = React.useMemo(
-    () => [
+  const columns =[
       {
         Header: "ID",
         accessor: "id",
@@ -53,23 +53,7 @@ export const ProductsColumn = () => {
       {
         Header: "Action",
         accessor: "action",
-        Cell: ({ row }) => {
-          const handleDelete = (value) => {
-            console.log(value);
-          };
-          return (
-            <div style={{ display: "flex", alignItems: "center", gap: 20,textAlign:'center' }}>
-              <Link to={`/product/${row.original.id}`}>
-              <BiEditAlt style={{ color: "green", cursor: "pointer" }} />
-              </Link>
-              <RiDeleteBin5Line
-                onClick={() => {
-                  handleDelete(row.original);
-                }}
-                style={{ color: "red", cursor: "pointer" }}
-              />
-            </div>
-          );
+        Cell: ({ row }) => { return <CellProductComponents id={row.original.id} />
         },
       },
       {
@@ -84,8 +68,6 @@ export const ProductsColumn = () => {
           );
         },
       },
-    ],
-    []
-  );
+    ];
   return columns;
 };

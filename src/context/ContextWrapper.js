@@ -1,12 +1,10 @@
 import React, {createContext, useState } from 'react'
 import { userRows } from '../utils/usersData';
-import { ProductsColumn } from '../utils/productsColumn';
-
+import { productrowData } from '../utils/productsData';
 export const adminContext=createContext();
 const ContextWrapper = ({children}) => {
-    const [isOpen,setIsOpen] = useState(false);
     const [users,setUsers] = useState(userRows);
-    const [products,setProducts] = useState(ProductsColumn); 
+    const [products,setProducts] = useState(productrowData); 
     const handleDelete=(id)=>{
         const isIndex = users.findIndex(item=>item.id==id);
         if(isIndex != -1){
@@ -20,7 +18,6 @@ const ContextWrapper = ({children}) => {
    <adminContext.Provider
    value={{
     handleDelete,
-    isOpen,setIsOpen,
     users,setUsers,
     products,setProducts
    }}

@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Products.scss'
 import DataTable from '../../components/dataTable/DataTable'
-import { products } from '../../utils/productsData'
 import { ProductsColumn } from '../../utils/productsColumn'
+import { adminContext } from '../../context/ContextWrapper'
 const Products = () => {
- 
+  const {products} = useContext(adminContext)
   return (
     <div className='products'>
     <div className="info">
       <h1>Users</h1>
-    <button>Add New User</button>
     </div>
     <DataTable data={products} 
     column={ProductsColumn()}

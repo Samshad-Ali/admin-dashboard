@@ -8,7 +8,7 @@
   display: none;
 }
   div {
-    text-align: end;
+    text-align: start;
     input {
       outline: none;
       border: none;
@@ -92,9 +92,12 @@
 
 @media screen and (max-width:425px) {
   .dataTable{
-
-    div{
-      text-align: start;
+    table{
+     tbody{
+      td{
+        padding: .2rem 1rem;
+      }
+     }
     }
   }
   .pagination{
